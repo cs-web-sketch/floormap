@@ -2,165 +2,131 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>フードコート・フロアマップ</title>
+    <title>フードコート・フロアマップ（拡大版）</title>
     <style>
         :root {
             --bg-dark: #1a1a2e;
             --accent-pink: #e91e63;
-            --aisle: #e0e0e0; /* 通路の色 */
             --shop-bg: #ffffff;
             --text-dark: #333;
         }
 
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             font-family: "Meiryo", sans-serif;
             background-color: var(--bg-dark);
             color: white;
+            overflow: hidden; /* スクロール防止 */
+        }
+
+        /* 縦に並べるレイアウト */
+        .wrapper {
             display: flex;
             flex-direction: column;
+            width: 100vw;
             height: 100vh;
-            overflow: hidden;
         }
 
         header {
+            flex: 0 0 auto;
             background: linear-gradient(90deg, #880e4f 0%, #ad1457 100%);
-            padding: 20px 40px;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 10;
         }
 
-        .title { font-size: 1.8rem; font-weight: bold; }
-        .back-button { 
-            color: white; 
-            text-decoration: none; 
-            border: 1px solid white; 
-            padding: 5px 15px; 
-            border-radius: 5px;
-        }
+        .title { font-size: 1.5rem; font-weight: bold; }
 
-        /* マップエリア */
+        /* マップを画面いっぱいに広げる */
         .map-container {
-            flex: 1;
+            flex: 1; /* 残りの画面領域をすべて使う */
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            background-color: #252545; /* マップの背景を少し明るくして見やすく */
+            padding: 10px;
         }
 
         svg {
-            width: 100%;
-            max-width: 900px;
-            height: auto;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            width: 95%;   /* 横幅いっぱい */
+            height: 90%;  /* 高さもほぼいっぱい */
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
         }
 
-        /* 店舗（部屋）のスタイル */
-        .shop-block {
-            fill: var(--shop-bg);
-            stroke: #ccc;
-            stroke-width: 2;
-            transition: 0.3s;
-        }
-
-        .shop-block:hover {
-            fill: #fff0f5;
-            stroke: var(--accent-pink);
-        }
-
-        .shop-label {
-            fill: var(--text-dark);
-            font-size: 14px;
-            font-weight: bold;
-            pointer-events: none; /* テキストがマウス反応を邪魔しないように */
-        }
-
-        .shop-id {
-            fill: var(--accent-pink);
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* 凡例・施設情報 */
-        .legend {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-
-        .legend-item { display: flex; align-items: center; gap: 10px; }
-        .color-dot { width: 20px; height: 20px; border-radius: 4px; }
+        /* パーツのスタイル */
+        .shop-block { fill: var(--shop-bg); stroke: #999; stroke-width: 1; transition: 0.2s; }
+        .shop-label { fill: var(--text-dark); font-size: 16px; font-weight: bold; }
+        .shop-id { fill: var(--accent-pink); font-size: 20px; font-weight: bold; }
+        .facility { fill: #747d8c; }
+        .facility-text { fill: white; font-size: 14px; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="title">2F フードコート フロアマップ</div>
-    <a href="#" class="back-button" onclick="history.back(); return false;">← 状況ダッシュボードへ戻る</a>
-</header>
+<div class="wrapper">
+    <header>
+        <div class="title">FLOOR GUIDE - 2F フードコート</div>
+        <div style="font-size: 1.2rem;">現在地：中央広場</div>
+    </header>
 
-<div class="map-container">
-    <svg viewBox="0 0 800 500">
-        <rect x="50" y="50" width="700" height="400" rx="20" fill="#f0f0f0" />
-        
-        <rect x="250" y="150" width="300" height="200" rx="10" fill="#dcdde1" />
-        <text x="400" y="255" text-anchor="middle" fill="#7f8c8d" font-size="20">共有客席エリア</text>
+    <div class="map-container">
+        <svg viewBox="40 40 720 420" preserveAspectRatio="xMidYMid meet">
+            <rect x="50" y="50" width="700" height="400" rx="15" fill="#f8f9fa" />
+            
+            <rect x="250" y="150" width="300" height="200" rx="10" fill="#dee2e6" />
+            <text x="400" y="255" text-anchor="middle" fill="#495057" font-size="24" font-weight="bold">客席エリア（Free Wi-Fi）</text>
 
-        <g class="shop-group">
-            <rect x="50" y="50" width="180" height="120" class="shop-block" />
-            <text x="65" y="85" class="shop-id">01</text>
-            <text x="65" y="115" class="shop-label">肉厚バーガー 極</text>
-        </g>
+            <g transform="translate(50, 50)">
+                <rect width="190" height="130" class="shop-block" />
+                <text x="15" y="35" class="shop-id">01</text>
+                <text x="15" y="75" class="shop-label">肉厚バーガー 極</text>
+            </g>
 
-        <g class="shop-group">
-            <rect x="240" y="50" width="150" height="90" class="shop-block" />
-            <text x="255" y="85" class="shop-id">02</text>
-            <text x="255" y="115" class="shop-label">讃岐うどん 麺匠</text>
-        </g>
+            <g transform="translate(250, 50)">
+                <rect width="145" height="90" class="shop-block" />
+                <text x="15" y="35" class="shop-id">02</text>
+                <text x="15" y="70" class="shop-label">讃岐うどん</text>
+            </g>
 
-        <g class="shop-group">
-            <rect x="400" y="50" width="150" height="90" class="shop-block" />
-            <text x="415" y="85" class="shop-id">03</text>
-            <text x="415" y="115" class="shop-label">特製旨辛 担々麺</text>
-        </g>
+            <g transform="translate(405, 50)">
+                <rect width="145" height="90" class="shop-block" />
+                <text x="15" y="35" class="shop-id">03</text>
+                <text x="15" y="70" class="shop-label">担々麺</text>
+            </g>
 
-        <g class="shop-group">
-            <rect x="560" y="50" width="190" height="120" class="shop-block" />
-            <text x="575" y="85" class="shop-id">04</text>
-            <text x="575" y="115" class="shop-label">ふわとろオムライス</text>
-        </g>
+            <g transform="translate(560, 50)">
+                <rect width="190" height="130" class="shop-block" />
+                <text x="15" y="35" class="shop-id">04</text>
+                <text x="15" y="75" class="shop-label">オムライス</text>
+            </g>
 
-        <g class="shop-group">
-            <rect x="50" y="330" width="180" height="120" class="shop-block" />
-            <text x="65" y="365" class="shop-id">05</text>
-            <text x="65" y="395" class="shop-label">本格石窯ピッツァ</text>
-        </g>
+            <g transform="translate(50, 320)">
+                <rect width="190" height="130" class="shop-block" />
+                <text x="15" y="35" class="shop-id">05</text>
+                <text x="15" y="75" class="shop-label">石窯ピッツァ</text>
+            </g>
 
-        <g class="shop-group">
-            <rect x="570" y="330" width="180" height="120" class="shop-block" />
-            <text x="585" y="365" class="shop-id">06</text>
-            <text x="585" y="395" class="shop-label">完熟フルーツパフェ</text>
-        </g>
+            <g transform="translate(560, 320)">
+                <rect width="190" height="130" class="shop-block" />
+                <text x="15" y="35" class="shop-id">06</text>
+                <text x="15" y="75" class="shop-label">フルーツパフェ</text>
+            </g>
 
-        <rect x="300" y="400" width="80" height="50" rx="5" fill="#a4b0be" />
-        <text x="340" y="430" text-anchor="middle" fill="white" font-size="12">返却口</text>
+            <rect x="250" y="360" width="145" height="40" rx="5" class="facility" />
+            <text x="322" y="385" text-anchor="middle" class="facility-text">返却口</text>
 
-        <rect x="420" y="400" width="80" height="50" rx="5" fill="#a4b0be" />
-        <text x="460" y="430" text-anchor="middle" fill="white" font-size="12">給水所</text>
+            <rect x="405" y="360" width="145" height="40" rx="5" class="facility" />
+            <text x="477" y="385" text-anchor="middle" class="facility-text">給水所</text>
 
-        <rect x="710" y="200" width="40" height="100" rx="5" fill="#747d8c" />
-        <text x="730" y="255" text-anchor="middle" fill="white" font-size="12" transform="rotate(90, 730, 255)">トイレ・授乳室</text>
-    </svg>
-</div>
-
-<div class="legend">
-    <div class="legend-item"><div class="color-dot" style="background: white; border: 1px solid #ccc;"></div><span>飲食店</span></div>
-    <div class="legend-item"><div class="color-dot" style="background: #dcdde1;"></div><span>客席</span></div>
-    <div class="legend-item"><div class="color-dot" style="background: #a4b0be;"></div><span>共用設備</span></div>
+            <rect x="710" y="190" width="40" height="120" rx="5" class="facility" />
+            <text x="730" y="250" text-anchor="middle" class="facility-text" transform="rotate(90, 730, 250)">トイレ・授乳室</text>
+        </svg>
+    </div>
 </div>
 
 </body>
